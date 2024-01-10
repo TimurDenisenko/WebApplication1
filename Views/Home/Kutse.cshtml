@@ -1,0 +1,22 @@
+﻿<head>
+    <style>
+        div {
+            position: absolute;
+        }
+    </style>
+</head>
+@{
+    ViewBag.Title = "Kutse";
+}
+
+<h2>Kutse</h2>
+<div>
+    <h1>@ViewBag.Greeting, Kallis sõber</h1>
+</div>
+<div>
+    @ViewBag.Message
+    <img src="~/Images/sosiska.jpg" alt="Alternate Text" />
+</div>
+<div>
+    @Html.ActionLink("Vastus kutsele","Ankeet","Ankeet", new {@class="btn btn-primary"})
+</div>

@@ -1,0 +1,28 @@
+﻿@model WebApplication1.Models.Guest
+
+@{
+    ViewBag.Title = "Thanks";
+}
+
+<h2>Thanks</h2>
+<div>
+    <p>Tänan sind, @Model.Name</p>
+</div>
+<div>
+    @if (Model.WillAttend)
+    {
+        @:Ootame sind kallis sõber!
+        <p>
+            <img src="#" alt="Alternate Text" />
+        </p>
+    }
+    else
+    {
+        @:Väga kurb uudis. Näeme hiljem!
+        <p>
+            <img src="#" alt="Alternate Text" />
+        </p>
+    }
+    @ViewBag.Message 
+</div>
+

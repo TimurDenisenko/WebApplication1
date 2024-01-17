@@ -1,12 +1,11 @@
-﻿
-    <script language="C#" runat="server">
-
-        void SubmitBtn_Click(Object sender, EventArgs e)
-        {
-            Message.Text = "Hello World!!";
+﻿<head>
+    <style>
+        img {
+            width: 1200px;
+            height: 900px;
         }
-
-    </script>
+    </style>
+</head>
     <h2>Äitah</h2>
     <div>
         <p>Tänan sind, @Model.Name</p>
@@ -18,18 +17,23 @@
             <p>
                 <img src="~/Images/ura.png" alt="aeg" />
             </p>
-            <form id="form1" runat="server">
-
-                <h3>Button Example</h3>
-
-                Click on the submit button.<br /><br />
-
-                                                 <input type="button" name="name" value="Submit" onclick="SubmitBtn_Click" />
-
-            </form>
-        }
-        else
-        {
+            <button onclick="open()">open</button>
+            <script>
+                function open() {
+                    @{ 
+                        WebMail.SmtpServer = "smtp.gmail.com";
+                        WebMail.SmtpPort = 587;
+                        WebMail.EnableSsl= true;
+                        WebMail.UserName = "timur.denisenko.work@gmail.com";
+                        WebMail.Password="duto ahun xrzh hjsq";
+                        WebMail.From = "timur.denisenko.work@gmail.com";
+                        WebMail.Send(@Model.Email, "Vastus kutsele ", "Meeldetuletus!");
+                    }
+                }
+            </script>
+                        }
+                        else
+                        {
             @:Väga kurb uudis. Näeme hiljem!
             <p>
                 <img src="~/Images/neura.jpg" alt="aeg" />

@@ -18,7 +18,7 @@ namespace WebApplication1.Controllers
                 ViewBag.Greeting = "Tere õhtust";
                 ViewBag.Hour = "aeg3.jpg";
             }
-            else if (hour>=12)
+            else if (hour>=14)
             {
                 ViewBag.Greeting = "Tere päevast";
                 ViewBag.Hour = "aeg2.jpg";
@@ -63,7 +63,7 @@ namespace WebApplication1.Controllers
                 WebMail.UserName = "timur.denisenko.work@gmail.com";
                 WebMail.Password="duto ahun xrzh hjsq";
                 WebMail.From = "timur.denisenko.work@gmail.com";
-                WebMail.Send(guest.Email, "Vastus kutsele", guest.Name+"vastas"+((guest?.WillAttend ?? false) ? "tuleb peole" : "ei tule peole"));
+                WebMail.Send("timur.denisenko.work@gmail.com", "Vastus kutsele ", guest.Name+"vastas "+((guest?.WillAttend ?? false) ? "tuleb peole" : "ei tule peole"));
                 ViewBag.Message = "Kiri on saatnud!";
             }
             catch (Exception)

@@ -1,28 +1,40 @@
-﻿@model WebApplication1.Models.Guest
+﻿
+    <script language="C#" runat="server">
 
-@{
-    ViewBag.Title = "Thanks";
-}
+        void SubmitBtn_Click(Object sender, EventArgs e)
+        {
+            Message.Text = "Hello World!!";
+        }
 
-<h2>Thanks</h2>
-<div>
-    <p>Tänan sind, @Model.Name</p>
-</div>
-<div>
-    @if (Model.WillAttend)
-    {
-        @:Ootame sind kallis sõber!
-        <p>
-            <img src="#" alt="Alternate Text" />
-        </p>
-    }
-    else
-    {
-        @:Väga kurb uudis. Näeme hiljem!
-        <p>
-            <img src="#" alt="Alternate Text" />
-        </p>
-    }
-    @ViewBag.Message 
-</div>
+    </script>
+    <h2>Äitah</h2>
+    <div>
+        <p>Tänan sind, @Model.Name</p>
+    </div>
+    <div>
+        @if (Model.WillAttend)
+        {
+            @:Ootame sind kallis sõber!
+            <p>
+                <img src="~/Images/ura.png" alt="aeg" />
+            </p>
+            <form id="form1" runat="server">
+
+                <h3>Button Example</h3>
+
+                Click on the submit button.<br /><br />
+
+                                                 <input type="button" name="name" value="Submit" onclick="SubmitBtn_Click" />
+
+            </form>
+        }
+        else
+        {
+            @:Väga kurb uudis. Näeme hiljem!
+            <p>
+                <img src="~/Images/neura.jpg" alt="aeg" />
+            </p>
+        }
+        @ViewBag.Message
+    </div>
 

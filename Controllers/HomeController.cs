@@ -12,6 +12,27 @@ namespace WebApplication1.Controllers
     {
         public ActionResult Index()
         {
+            byte hour = (byte)DateTime.Now.Hour;
+            if (hour>=18)
+            { 
+                ViewBag.Greeting = "Tere õhtust";
+                ViewBag.Hour = "aeg3.jpg";
+            }
+            else if (hour>=12)
+            {
+                ViewBag.Greeting = "Tere päevast";
+                ViewBag.Hour = "aeg2.jpg";
+            }
+            else if (hour>=6)
+            {
+                ViewBag.Greeting = "Tere hommikust";
+                ViewBag.Hour = "aeg1.jpg";
+            }
+            else
+            { 
+                ViewBag.Greeting = "Head ööd";
+                ViewBag.Hour = "aeg4.jpg";
+            }
             return View();
         }
 
@@ -25,7 +46,9 @@ namespace WebApplication1.Controllers
         {
             E_mail(guest);
             if (ModelState.IsValid)
-                return View("Thanks", guest);
+            {
+                return View("Thanks",guest);
+            }
             else
                 return View();
         }
@@ -51,8 +74,33 @@ namespace WebApplication1.Controllers
 
         public ActionResult Kutse()
         {
-            ViewBag.Greeting = DateTime.Now.Hour<10 ? "Tere hommikust" : "Tere paevast";
-            ViewBag.Message = "Ootan sind!";
+            byte hour = (byte)DateTime.Now.Hour;
+            if (hour>=18)
+                ViewBag.Greeting = "Tere õhtust";
+            else if (hour>=12)
+                ViewBag.Greeting = "Tere päevast";
+            else if (hour>=6)
+                ViewBag.Greeting = "Tere hommikust";
+            else
+                ViewBag.Greeting = "Head ööd";
+            byte month = (byte)DateTime.Now.Month;
+            ViewBag.Message = "Ootan sind puhkusele - ";
+            switch (month)
+            {
+                case 12: ViewBag.Message+="uus aasta! 1 Jaanuar"; break;
+                case 1: ViewBag.Message+="iseseisvuspäev! 24 Veebruar"; break;
+                case 2: ViewBag.Message+="naistepäev! 8 Märts"; break;
+                case 3: ViewBag.Message+="narripäev! 1 Aprill"; break;
+                case 4: ViewBag.Message+="kevadpäev! 1 Mai"; break;
+                case 5: ViewBag.Message+="ivani päev! 24 Juuni"; break;
+                case 6: ViewBag.Message+="alice Imedemaal päev! 4 Juuli"; break;
+                case 7: ViewBag.Message+="iseseisvuse taastamise päev! 20 August"; break;
+                case 8: ViewBag.Message+="teadmiste päev 1 September"; break;
+                case 9: ViewBag.Message+="kohalike omavalitsuste päev! 1 Oktoober"; break;
+                case 10: ViewBag.Message+="isadepäev! 10 November"; break;
+                case 11: ViewBag.Message+="jõulud! 24-26 Detsembrid"; break;
+            }
+            ViewBag.Month = "p"+month+".jpg";
 
             return View();
         }

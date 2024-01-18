@@ -9,6 +9,7 @@ namespace WebApplication1.Models
 {
     public class Guest
     {
+        public int Id { get; set; }
         [Required(ErrorMessage ="Sisesta nimi siia")]
         public string Name { get; set; }
 

@@ -176,6 +176,8 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Guest.cs" />
+    <Compile Include="Models\GuestContext.cs" />
+    <Compile Include="Models\GuestDBInitializer.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -241,9 +243,12 @@
     <Content Include="Views\Home\Ankeet.cshtml" />
     <Content Include="Views\Home\Thanks.cshtml" />
     <Content Include="Views\Home\Answer.cshtml" />
+    <Content Include="Views\Home\Guests.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\GuestContext\" />
+    <Folder Include="Views\GuestDBInitializer\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

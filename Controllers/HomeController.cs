@@ -118,5 +118,12 @@ namespace WebApplication1.Controllers
 
             return View();
         }
+        GuestContext db = new GuestContext();
+        public ActionResult Guest()
+        {
+            IEnumerable<Guest> guest = db.Guests;
+            return View(guest);
+        }
+
     }
 }

@@ -31,7 +31,7 @@ namespace WebApplication1.Controllers
             else
             { 
                 ViewBag.Greeting = "Head ööd";
-                ViewBag.Hour = "aeg4.jpg";
+                ViewBag.Hour = "aeg4.jpeg";
             }
             return View();
         }
@@ -119,7 +119,7 @@ namespace WebApplication1.Controllers
             return View();
         }
         GuestContext db = new GuestContext();
-        public ActionResult Guest()
+        public ActionResult Guests()
         {
             IEnumerable<Guest> guest = db.Guests;
             return View(guest);

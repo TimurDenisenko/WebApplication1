@@ -1,0 +1,58 @@
+﻿@model WebApplication1.Models.Guest
+
+@{
+    ViewBag.Title = "Üksikasjad";
+}
+
+<h2>Üksikasjad</h2>
+
+<div>
+    <h4>Külaline</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Nimi
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            Vanus
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Age)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            Telefoninumber
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Phone)
+        </dd>
+
+        <dt>
+            Kas osaleb
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.WillAttend)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Muuda", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Tagasi nimekirja", "Guests")
+</p>

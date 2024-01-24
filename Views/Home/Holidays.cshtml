@@ -1,0 +1,38 @@
+﻿@model IEnumerable<WebApplication1.Models.Holiday>
+
+@{
+    ViewBag.Title = "Peod";
+}
+
+<h2>Holidays</h2>
+
+<p>
+    @Html.ActionLink("Lisa uus", "hCreate")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Nimetus
+        </th>
+        <th>
+            Kuupäev
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Date)
+        </td>
+        <td>
+            @Html.ActionLink("Muuda", "hEdit", new { id=item.Id }) | 
+            @Html.ActionLink("Kustuta", "hDelete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

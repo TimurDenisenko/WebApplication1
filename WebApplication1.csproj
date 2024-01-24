@@ -175,9 +175,12 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\HolidayDBInitializer.cs" />
+    <Compile Include="Models\Holiday.cs" />
     <Compile Include="Models\Guest.cs" />
     <Compile Include="Models\GuestContext.cs" />
     <Compile Include="Models\GuestDBInitializer.cs" />
+    <Compile Include="Models\HolidayContext.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -244,6 +247,14 @@
     <Content Include="Views\Home\Thanks.cshtml" />
     <Content Include="Views\Home\Answer.cshtml" />
     <Content Include="Views\Home\Guests.cshtml" />
+    <Content Include="Views\Home\Create.cshtml" />
+    <Content Include="Views\Home\Delete.cshtml" />
+    <Content Include="Views\Home\Edit.cshtml" />
+    <Content Include="Views\Home\Details.cshtml" />
+    <Content Include="Views\Home\Holidays.cshtml" />
+    <Content Include="Views\Home\hCreate.cshtml" />
+    <Content Include="Views\Home\hDelete.cshtml" />
+    <Content Include="Views\Home\hEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

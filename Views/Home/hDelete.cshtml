@@ -1,0 +1,40 @@
+﻿@model WebApplication1.Models.Holiday
+
+@{
+    ViewBag.Title = "Kustuta";
+}
+
+<h2>Kustuta</h2>
+
+<h3>Kas olete kindel, et soovite selle kustutada?</h3>
+<div>
+    <h4>Pidu</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Nimetus
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            Kuupäev
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Tagasi nimekirja", "Holidays")
+        </div>
+    }
+</div>

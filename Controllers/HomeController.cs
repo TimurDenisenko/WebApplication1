@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
+using System.Data.Entity;
 using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
@@ -14,7 +15,7 @@ namespace WebApplication1.Controllers
         {
             byte hour = (byte)DateTime.Now.Hour;
             if (hour>=18)
-            { 
+            {
                 ViewBag.Greeting = "Tere õhtust";
                 ViewBag.Hour = "aeg3.jpg";
             }
@@ -29,13 +30,14 @@ namespace WebApplication1.Controllers
                 ViewBag.Hour = "aeg1.jpg";
             }
             else
-            { 
+            {
                 ViewBag.Greeting = "Head ööd";
                 ViewBag.Hour = "aeg4.jpeg";
             }
             return View();
         }
 
+        #region "Guest"
         [HttpGet]
         public ActionResult Ankeet()
         {
@@ -47,7 +49,9 @@ namespace WebApplication1.Controllers
             E_mail(guest);
             if (ModelState.IsValid)
             {
-                return View("Thanks",guest);
+                db.Guests.Add(guest);
+                db.SaveChanges();
+                return View("Thanks", guest);
             }
             else
                 return View();
@@ -121,9 +125,129 @@ namespace WebApplication1.Controllers
         GuestContext db = new GuestContext();
         public ActionResult Guests()
         {
+            ViewBag.Will = null;
             IEnumerable<Guest> guest = db.Guests;
             return View(guest);
         }
+        [HttpGet]
+        public ActionResult Create()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Create(Guest guest)
+        {
+            db.Guests.Add(guest);
+            db.SaveChanges();
+            return RedirectToAction("Guests");
+        }
+        [HttpGet]
+        public ActionResult Delete(int id)
+        {
+            Guest g = db.Guests.Find(id);
+            if (g==null)
+                return HttpNotFound();
+            return View(g);
+        }
+        [HttpPost, ActionName("Delete")]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            Guest g = db.Guests.Find(id);
+            if (g == null)
+                return HttpNotFound();
+            db.Guests.Remove(g);
+            db.SaveChanges();
+            return RedirectToAction("Guests");
+        }
+        [HttpGet]
+        public ActionResult Edit(int? id)
+        {
+            Guest g = db.Guests.Find(id);
+            if (g == null)
+                return HttpNotFound();
+            return View(g);
+        }
+        [HttpPost, ActionName("Edit")]
+        public ActionResult EditConfirmed(Guest guest)
+        {
+            db.Entry(guest).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Guests");
+        }
+        [HttpGet]
+        public ActionResult Accept()
+        {
+            IEnumerable<Guest> guests = db.Guests.Where(g => g.WillAttend == true);
+            ViewBag.Will = true;
+            return View("Guests", guests);
+        }
+        [HttpGet]
+        public ActionResult Reject()
+        {
+            IEnumerable<Guest> guests = db.Guests.Where(g => g.WillAttend == false);
+            ViewBag.Will = false;
+            return View("Guests", guests);
+        }
+        [HttpGet]
+        public ActionResult Details(int? id)
+        {
+            Guest g = db.Guests.Find(id);
+            if (g == null)
+                return HttpNotFound();
+            return View(g);
+        }
+        #endregion
 
+        HolidayContext db1 = new HolidayContext();
+        public ActionResult Holidays()
+        {
+            IEnumerable<Holiday> holidays = db1.Holidays;
+            return View(holidays);
+        }
+        [HttpGet]
+        public ActionResult hCreate() 
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult hCreate(Holiday holiday)
+        {
+            db1.Holidays.Add(holiday);
+            db1.SaveChanges();
+            return RedirectToAction("Holidays");
+        }
+        [HttpGet]
+        public ActionResult hDelete(int id) 
+        {
+            Holiday h = db1.Holidays.Find(id);
+            if (h==null)
+                return HttpNotFound();
+            return View(h);
+        }
+        [HttpPost,ActionName("hDelete")]
+        public ActionResult hDeleteConfirmed(int id)
+        {
+            Holiday h = db1.Holidays.Find(id);
+            if (h==null)
+                return HttpNotFound();
+            db1.Holidays.Remove(h);
+            db1.SaveChanges();
+            return RedirectToAction("Holidays");
+        }
+        [HttpGet]
+        public ActionResult hEdit(int? id)
+        {
+            Holiday h = db1.Holidays.Find(id);
+            if (h==null)
+                return HttpNotFound();
+            return View(h);
+        }
+        [HttpPost, ActionName("hEdit")]
+        public ActionResult hEditConfirmed(Holiday holiday)
+        {
+            db1.Entry(holiday).State = EntityState.Modified;
+            db1.SaveChanges();
+            return RedirectToAction("Holidays");
+        }
     }
 }

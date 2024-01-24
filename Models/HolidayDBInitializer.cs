@@ -7,11 +7,11 @@ using System.Web.Mvc;
 
 namespace WebApplication1.Models
 {
-    public class GuestDBInitializer : CreateDatabaseIfNotExists<GuestContext>
+    public class HolidayDBInitializer : CreateDatabaseIfNotExists<HolidayContext>
     {
-        protected override void Seed(GuestContext db1)
+        protected override void Seed(HolidayContext db)
         {
-            base.Seed(db1);
+            base.Seed(db);
         }
     }
 }

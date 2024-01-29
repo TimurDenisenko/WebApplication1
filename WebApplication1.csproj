@@ -175,12 +175,10 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\HolidayDBInitializer.cs" />
     <Compile Include="Models\Holiday.cs" />
     <Compile Include="Models\Guest.cs" />
     <Compile Include="Models\GuestContext.cs" />
     <Compile Include="Models\GuestDBInitializer.cs" />
-    <Compile Include="Models\HolidayContext.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -25,6 +25,6 @@ namespace WebApplication1.Models
 
         [Required(ErrorMessage = "Sisesta oma valik siia")]
         public bool WillAttend { get; set; }
-        public Holiday holiday { get; set; }
+        public List<Holiday> Holidays { get; set; }
     }
 }

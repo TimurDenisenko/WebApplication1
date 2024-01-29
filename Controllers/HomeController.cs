@@ -123,6 +123,7 @@ namespace WebApplication1.Controllers
             return View();
         }
         GuestContext db = new GuestContext();
+        [Authorize(Roles = "User,Admin")]
         public ActionResult Guests()
         {
             ViewBag.Will = null;
@@ -198,10 +199,12 @@ namespace WebApplication1.Controllers
         }
         #endregion
 
-        HolidayContext db1 = new HolidayContext();
+        #region "Holiday"
+
+        [Authorize(Roles = "User,Admin")]
         public ActionResult Holidays()
         {
-            IEnumerable<Holiday> holidays = db1.Holidays;
+            IEnumerable<Holiday> holidays = db.Holidays;
             return View(holidays);
         }
         [HttpGet]
@@ -212,14 +215,14 @@ namespace WebApplication1.Controllers
         [HttpPost]
         public ActionResult hCreate(Holiday holiday)
         {
-            db1.Holidays.Add(holiday);
-            db1.SaveChanges();
+            db.Holidays.Add(holiday);
+            db.SaveChanges();
             return RedirectToAction("Holidays");
         }
         [HttpGet]
         public ActionResult hDelete(int id) 
         {
-            Holiday h = db1.Holidays.Find(id);
+            Holiday h = db.Holidays.Find(id);
             if (h==null)
                 return HttpNotFound();
             return View(h);
@@ -227,17 +230,17 @@ namespace WebApplication1.Controllers
         [HttpPost,ActionName("hDelete")]
         public ActionResult hDeleteConfirmed(int id)
         {
-            Holiday h = db1.Holidays.Find(id);
+            Holiday h = db.Holidays.Find(id);
             if (h==null)
                 return HttpNotFound();
-            db1.Holidays.Remove(h);
-            db1.SaveChanges();
+            db.Holidays.Remove(h);
+            db.SaveChanges();
             return RedirectToAction("Holidays");
         }
         [HttpGet]
         public ActionResult hEdit(int? id)
         {
-            Holiday h = db1.Holidays.Find(id);
+            Holiday h = db.Holidays.Find(id);
             if (h==null)
                 return HttpNotFound();
             return View(h);
@@ -245,9 +248,10 @@ namespace WebApplication1.Controllers
         [HttpPost, ActionName("hEdit")]
         public ActionResult hEditConfirmed(Holiday holiday)
         {
-            db1.Entry(holiday).State = EntityState.Modified;
-            db1.SaveChanges();
+            db.Entry(holiday).State = EntityState.Modified;
+            db.SaveChanges();
             return RedirectToAction("Holidays");
         }
+        #endregion
     }
 }

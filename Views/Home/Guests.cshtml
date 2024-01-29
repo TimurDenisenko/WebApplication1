@@ -30,8 +30,10 @@
 {
     foreach (var item in Model)
     {
-        if (item.WillAttend == ViewBag.Will)
+        if (item.WillAttend != ViewBag.Will)
         {
+            continue;
+        }
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.Name)
@@ -45,7 +47,6 @@
                     @Html.ActionLink("Kustuta", "Delete", new { id = item.Id })
                 </td>
             </tr>
-        }
     }
 }
 else

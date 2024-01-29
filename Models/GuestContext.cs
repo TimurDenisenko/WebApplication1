@@ -9,5 +9,7 @@ namespace WebApplication1.Models
     public class GuestContext : DbContext
     {
         public DbSet<Guest> Guests { get;set; }
+        public DbSet<Holiday> Holidays { get; set; }
+
     }
 }

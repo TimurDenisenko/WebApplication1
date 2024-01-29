@@ -9,9 +9,9 @@ namespace WebApplication1.Models
 {
     public class GuestDBInitializer : CreateDatabaseIfNotExists<GuestContext>
     {
-        protected override void Seed(GuestContext db1)
+        protected override void Seed(GuestContext db)
         {
-            base.Seed(db1);
+            base.Seed(db);
         }
     }
 }

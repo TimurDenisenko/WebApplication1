@@ -6,6 +6,9 @@ using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Data.Entity;
 using WebApplication1.Models;
+using Microsoft.AspNet.Identity;
+using System.Collections.ObjectModel;
+using System.Xml.Linq;
 
 namespace WebApplication1.Controllers
 {
@@ -39,11 +42,13 @@ namespace WebApplication1.Controllers
 
         #region "Guest"
         [HttpGet]
+        [Authorize]
         public ActionResult Ankeet()
         {
             return View();
         }
         [HttpPost]
+        [Authorize]
         public ViewResult Ankeet(Guest guest)
         {
             E_mail(guest);
@@ -57,6 +62,7 @@ namespace WebApplication1.Controllers
                 return View();
         }
 
+        [Authorize]
         private void E_mail(Guest guest)
         {
             try
@@ -67,7 +73,7 @@ namespace WebApplication1.Controllers
                 WebMail.UserName = "timur.denisenko.work@gmail.com";
                 WebMail.Password="duto ahun xrzh hjsq";
                 WebMail.From = "timur.denisenko.work@gmail.com";
-                WebMail.Send("timur.denisenko.work@gmail.com", "Vastus kutsele ", guest.Name+"vastas "+((guest?.WillAttend ?? false) ? "tuleb peole" : "ei tule peole"));
+                WebMail.Send("timur.denisenko.work@gmail.com", "Vastus kutsele ", guest.Name+" vastas "+((guest?.WillAttend ?? false) ? "tuleb peole" : "ei tule peole"));
                 ViewBag.Message = "Kiri on saatnud!";
             }
             catch (Exception)
@@ -75,7 +81,7 @@ namespace WebApplication1.Controllers
                 ViewBag.Message = "Mul on kahju! Ei saa kirja saada!";
             }
         }
-
+        [Authorize]
         public ActionResult Kutse()
         {
             byte hour = (byte)DateTime.Now.Hour;
@@ -87,24 +93,8 @@ namespace WebApplication1.Controllers
                 ViewBag.Greeting = "Tere hommikust";
             else
                 ViewBag.Greeting = "Head ööd";
-            byte month = (byte)DateTime.Now.Month;
-            ViewBag.Message = "Ootan sind puhkusele - ";
-            switch (month)
-            {
-                case 12: ViewBag.Message+="uus aasta! 1 Jaanuar"; break;
-                case 1: ViewBag.Message+="iseseisvuspäev! 24 Veebruar"; break;
-                case 2: ViewBag.Message+="naistepäev! 8 Märts"; break;
-                case 3: ViewBag.Message+="narripäev! 1 Aprill"; break;
-                case 4: ViewBag.Message+="kevadpäev! 1 Mai"; break;
-                case 5: ViewBag.Message+="ivani päev! 24 Juuni"; break;
-                case 6: ViewBag.Message+="alice Imedemaal päev! 4 Juuli"; break;
-                case 7: ViewBag.Message+="iseseisvuse taastamise päev! 20 August"; break;
-                case 8: ViewBag.Message+="teadmiste päev 1 September"; break;
-                case 9: ViewBag.Message+="kohalike omavalitsuste päev! 1 Oktoober"; break;
-                case 10: ViewBag.Message+="isadepäev! 10 November"; break;
-                case 11: ViewBag.Message+="jõulud! 24-26 Detsembrid"; break;
-            }
-            ViewBag.Month = "p"+month+".jpg";
+            string message = string.Join(", ",db.Holidays.Select(holiday => holiday.Name));
+            ViewBag.Message = "Registreeri inimene järgmisteks pühadeks: - " + message;
 
             return View();
         }
@@ -123,19 +113,20 @@ namespace WebApplication1.Controllers
             return View();
         }
         GuestContext db = new GuestContext();
-        [Authorize(Roles = "User,Admin")]
+        [Authorize]
         public ActionResult Guests()
         {
-            ViewBag.Will = null;
             IEnumerable<Guest> guest = db.Guests;
             return View(guest);
         }
+        [Authorize]
         [HttpGet]
         public ActionResult Create()
         {
             return View();
         }
         [HttpPost]
+        [Authorize]
         public ActionResult Create(Guest guest)
         {
             db.Guests.Add(guest);
@@ -143,6 +134,7 @@ namespace WebApplication1.Controllers
             return RedirectToAction("Guests");
         }
         [HttpGet]
+        [Authorize]
         public ActionResult Delete(int id)
         {
             Guest g = db.Guests.Find(id);
@@ -151,6 +143,7 @@ namespace WebApplication1.Controllers
             return View(g);
         }
         [HttpPost, ActionName("Delete")]
+        [Authorize]
         public ActionResult DeleteConfirmed(int id)
         {
             Guest g = db.Guests.Find(id);
@@ -161,6 +154,7 @@ namespace WebApplication1.Controllers
             return RedirectToAction("Guests");
         }
         [HttpGet]
+        [Authorize]
         public ActionResult Edit(int? id)
         {
             Guest g = db.Guests.Find(id);
@@ -169,6 +163,7 @@ namespace WebApplication1.Controllers
             return View(g);
         }
         [HttpPost, ActionName("Edit")]
+        [Authorize]
         public ActionResult EditConfirmed(Guest guest)
         {
             db.Entry(guest).State = EntityState.Modified;
@@ -176,20 +171,21 @@ namespace WebApplication1.Controllers
             return RedirectToAction("Guests");
         }
         [HttpGet]
+        [Authorize]
         public ActionResult Accept()
         {
             IEnumerable<Guest> guests = db.Guests.Where(g => g.WillAttend == true);
-            ViewBag.Will = true;
             return View("Guests", guests);
         }
         [HttpGet]
+        [Authorize]
         public ActionResult Reject()
         {
             IEnumerable<Guest> guests = db.Guests.Where(g => g.WillAttend == false);
-            ViewBag.Will = false;
             return View("Guests", guests);
         }
         [HttpGet]
+        [Authorize]
         public ActionResult Details(int? id)
         {
             Guest g = db.Guests.Find(id);
@@ -201,18 +197,20 @@ namespace WebApplication1.Controllers
 
         #region "Holiday"
 
-        [Authorize(Roles = "User,Admin")]
+        [Authorize]
         public ActionResult Holidays()
         {
             IEnumerable<Holiday> holidays = db.Holidays;
             return View(holidays);
         }
         [HttpGet]
+        [Authorize]
         public ActionResult hCreate() 
         {
             return View();
         }
         [HttpPost]
+        [Authorize]
         public ActionResult hCreate(Holiday holiday)
         {
             db.Holidays.Add(holiday);
@@ -220,6 +218,7 @@ namespace WebApplication1.Controllers
             return RedirectToAction("Holidays");
         }
         [HttpGet]
+        [Authorize]
         public ActionResult hDelete(int id) 
         {
             Holiday h = db.Holidays.Find(id);
@@ -228,6 +227,7 @@ namespace WebApplication1.Controllers
             return View(h);
         }
         [HttpPost,ActionName("hDelete")]
+        [Authorize]
         public ActionResult hDeleteConfirmed(int id)
         {
             Holiday h = db.Holidays.Find(id);
@@ -238,6 +238,7 @@ namespace WebApplication1.Controllers
             return RedirectToAction("Holidays");
         }
         [HttpGet]
+        [Authorize]
         public ActionResult hEdit(int? id)
         {
             Holiday h = db.Holidays.Find(id);
@@ -246,11 +247,83 @@ namespace WebApplication1.Controllers
             return View(h);
         }
         [HttpPost, ActionName("hEdit")]
+        [Authorize]
         public ActionResult hEditConfirmed(Holiday holiday)
         {
             db.Entry(holiday).State = EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("Holidays");
+        }
+        [HttpGet]
+        [Authorize]
+        public ActionResult hReg(int? id)
+        {
+            Holiday h = db.Holidays.Find(id);
+            if (h == null)
+                return HttpNotFound();
+            return View(h);
+        }
+        [HttpPost, ActionName("hReg")]
+        [Authorize]
+        public ActionResult hRegConfirmed(Holiday holiday)
+        {
+            db.Entry(holiday).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Holidays");
+        }
+        [HttpGet]
+        [Authorize]
+        public ActionResult hUnReg(int? id)
+        {
+            Holiday h = db.Holidays.Find(id);
+            if (h == null)
+                return HttpNotFound();
+            return View(h);
+        }
+        [HttpPost, ActionName("hUnReg")]
+        [Authorize]
+        public ActionResult hUnRegConfirmed(Holiday holiday)
+        {
+            db.Entry(holiday).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Holidays");
+        }
+        [HttpGet]
+        [Authorize]
+        public ActionResult hAccept()
+        {
+            string name = User.Identity.GetUserName();
+            IEnumerable<Holiday> holidays = db.Holidays.Where(g => g.User == name);
+            return View("Holidays", holidays);
+        }
+        [HttpGet]
+        [Authorize]
+        public ActionResult hReject()
+        {
+            string name = User.Identity.GetUserName();
+            IEnumerable<Holiday> holidays = db.Holidays.Where(g => g.User != name);
+            return View("Holidays", holidays);
+        }
+        [HttpGet]
+        [Authorize]
+        public ActionResult EpostLast(string Email)
+        {
+            try
+            {
+                WebMail.SmtpServer = "smtp.gmail.com";
+                WebMail.SmtpPort = 587;
+                WebMail.EnableSsl = true;
+                WebMail.UserName = "timur.denisenko.work@gmail.com";
+                WebMail.Password = "duto ahun xrzh hjsq";
+                WebMail.From = "timur.denisenko.work@gmail.com";
+                WebMail.Send(Email, "Vastus kutsele ", "Meeldetuletus!");
+            }
+            catch (Exception)
+            {
+                ViewBag.Message = "Mul on kahju! Ei saa kirja saada!";
+            }
+            IEnumerable<Guest> guests = db.Guests;
+            return View("Guests", guests);
         }
         #endregion
     }

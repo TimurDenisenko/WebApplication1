@@ -1,4 +1,5 @@
-﻿@{
+﻿@using Microsoft.AspNet.Identity
+@{
     ViewBag.Title = "Ankeet";
 }
 
@@ -9,6 +10,9 @@
 @using (Html.BeginForm())
 {
     @Html.ValidationSummary()
+    <div class="col-md-10red">
+        Kasutaja: @Html.EditorFor(x => x.User, new { htmlAttributes = new { @Value = User.Identity.GetUserName() } })
+    </div>
     <p> Sisesta nimi: @Html.TextBoxFor(x => x.Name)</p>
     <p> Sisesta email: @Html.TextBoxFor(x => x.Email)</p>
     <p> Sisesta tel: @Html.TextBoxFor(x => x.Phone)</p>

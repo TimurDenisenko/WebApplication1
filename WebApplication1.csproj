@@ -253,6 +253,8 @@
     <Content Include="Views\Home\hCreate.cshtml" />
     <Content Include="Views\Home\hDelete.cshtml" />
     <Content Include="Views\Home\hEdit.cshtml" />
+    <Content Include="Views\Home\hReg.cshtml" />
+    <Content Include="Views\Home\hUnReg.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

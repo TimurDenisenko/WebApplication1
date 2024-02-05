@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<WebApplication1.Models.Holiday>
-
+@using Microsoft.AspNet.Identity
 @{
     ViewBag.Title = "Peod";
 }
@@ -8,6 +8,13 @@
 
 <p>
     @Html.ActionLink("Lisa uus", "hCreate")
+</p>
+<p>
+    @Html.ActionLink("Kõik", "Holidays")
+    |
+    @Html.ActionLink("Registreeritud", "hAccept")
+    |
+    @Html.ActionLink("Registreerimata", "hReject")
 </p>
 <table class="table">
     <tr>
@@ -20,19 +27,31 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Date)
-        </td>
-        <td>
-            @Html.ActionLink("Muuda", "hEdit", new { id=item.Id }) | 
-            @Html.ActionLink("Kustuta", "hDelete", new { id=item.Id })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @if (!User.IsInRole("Admin") && item.User != User.Identity.GetUserName())
+                {
+                    @Html.ActionLink("Reegistreri", "hReg", new { id = item.Id })
+                }
+                else
+                {
+                    if (!User.IsInRole("Admin"))
+                    {
+                        @Html.ActionLink("Lahku | ", "hUnReg", new { id = item.Id })
+                    }
+                    @Html.ActionLink("Muuda | ", "hEdit", new { id = item.Id })
+                    @Html.ActionLink("Kustuta", "hDelete", new { id = item.Id })
+                }
+            </td>
+        </tr>
+    }
 
 </table>
